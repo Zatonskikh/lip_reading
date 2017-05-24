@@ -12,7 +12,7 @@ class MarkUp:
     def __init__(self):
         self._lip_finder = LipFinder()
 
-    def mark_up_video(self, path=0):
+    def mark_up_video(self, path=0, random_str="1"):
         self._path = path
         self._video = cv2.VideoCapture(self._path)
         self.folder_name = None
@@ -46,7 +46,7 @@ class MarkUp:
                 break
         # TODO: delete this line
         cv2.destroyAllWindows()
-        create_X_train(self.folder_name)
+        create_X_train(self.folder_name, word, random_str)
 
     #TODO: rewrite after building model of lips
     def calc_dist_point_from_other(self, lips, h, w):

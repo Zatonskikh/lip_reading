@@ -37,14 +37,16 @@ def save_matrix_in_file(mat, frame_number, folder_name):
     json.dump(result, data_file)
     data_file.close()
 
+
 def delete_extra_lip_points(lip_array):
     lip_array = np.delete(lip_array, np.s_[1::2], 0)
     lip_array = np.delete(lip_array, 6, 0)
     lip_array = np.delete(lip_array,7,0)
     return lip_array
 
+
 def create_train_element_json(word, path):
-    meta_file_name =  os.path.join(path, "%s_meta.json" % word)
+    meta_file_name = os.path.join(path, "%s_meta.json" % word)
     if os.path.exists(meta_file_name):
         return
     vector = [0] * len(config.NN_CLASSES_ID)
@@ -58,16 +60,22 @@ def create_train_element_json(word, path):
     json.dump(result, meta_file)
     meta_file.close()
 
+
 def get_file_content(file_name):
     current_file = open(file_name, "r")
     content = current_file.read()
     current_file.close()
     return content
 
-def create_X_train(path):
+
+def create_X_train(path, word, random_str):
     files = glob.glob(os.path.join(path, "*.json"))
     files = sorted(files, key=sort_frames)
+    x_sample_folder = os.path.join(path, "../" + word + "_" + random_str)
+    os.mkdir(x_sample_folder)
+    number = 0
     for i in range(config.OFFSET_FRAMES, len(files) - config.SPLIT_COUNT_FRAMES, config.SPLIT_COUNT_FRAMES):
+        number += 1
         current_vector = json.loads(get_file_content(files[i]))['vector']
         next_vector = json.loads(get_file_content(files[i + config.SPLIT_COUNT_FRAMES]))['vector']
         subtract_vector = list(np.array(next_vector) - np.array(current_vector))
@@ -76,9 +84,10 @@ def create_X_train(path):
             "subtrahend": i,
             "vector": subtract_vector
         }
-        # TODO: json.dump(result, ...)
-
-
+        x_sample_frame = os.path.join(x_sample_folder, str(number) + "_frame.json")
+        frame_file = open(x_sample_frame, "w")
+        json.dump(result, frame_file)
+        frame_file.close()
 
 
 def sort_frames(text):
