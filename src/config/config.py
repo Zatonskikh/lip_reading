@@ -8,6 +8,10 @@ DATA_PATH = os.path.join(CURRENT_PROJECT_PATH, "../data")
 PATH_TO_SHAPE_LANDMARK = "config/shape_predictor_68_face_landmarks.dat"
 ASPECT_RATIO = 7
 
+VIDEO_FORMATS = ["MOV", "mp4"]
+
+COLLECT_DATA = True
+
 FRAME_VECTOR_SIZE = 56
 FRAME_DIFFERENCE_AMOUNT_LIMIT = 8
 

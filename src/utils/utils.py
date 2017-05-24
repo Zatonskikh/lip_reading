@@ -5,6 +5,7 @@ import glob
 import numpy as np
 import src.config as config
 import re
+from uuid import uuid4
 
 def show_image(name, image):
     cv2.imshow(name, image)
@@ -113,7 +114,6 @@ def create_X_train(path, word, random_str):
 
         json.dump(result, frame_file)
         frame_file.close()
-        
     if number < config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
         fill_to_equal(number, x_sample_folder)
 
@@ -122,5 +122,19 @@ def sort_frames(text):
     return int(re.split('(\d+)', os.path.basename(text))[1])
 
 
+def get_video_paths(path):
+    videos = []
+    for video_format in config.VIDEO_FORMATS:
+        videos += glob.glob(os.path.join(path, "*.%s" % video_format))
+    return videos
 
+
+def start_collect_data(instance):
+    for word in config.NN_CLASSES_ID.keys():
+        folder_path_word = os.path.join(config.DATA_PATH, word)
+        if os.path.exists(folder_path_word):
+            video_paths = get_video_paths(folder_path_word)
+            for video_path in video_paths:
+                random_str = str(uuid4())
+                instance.mark_up_video(video_path, random_str)
 
