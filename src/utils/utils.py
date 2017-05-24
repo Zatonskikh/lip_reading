@@ -68,6 +68,28 @@ def get_file_content(file_name):
     return content
 
 
+def get_extra_vector():
+    result = []
+    for i in range(0, config.FRAME_VECTOR_SIZE):
+        result.append(0)
+    return result
+
+
+def fill_to_equal(number, x_sample_folder):
+    extra_vector = get_extra_vector()
+    while number <= config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
+        x_sample_frame = os.path.join(x_sample_folder, str(number) + "_frame.json")
+        frame_file = open(x_sample_frame, "w")
+        result = {
+            "minuend": 0,
+            "subtrahend": 0,
+            "vector": extra_vector
+        }
+        json.dump(result, frame_file)
+        frame_file.close()
+        number += 1
+
+
 def create_X_train(path, word, random_str):
     files = glob.glob(os.path.join(path, "*.json"))
     files = sorted(files, key=sort_frames)
@@ -76,6 +98,8 @@ def create_X_train(path, word, random_str):
     number = 0
     for i in range(config.OFFSET_FRAMES, len(files) - config.SPLIT_COUNT_FRAMES, config.SPLIT_COUNT_FRAMES):
         number += 1
+        if number > config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
+            break
         current_vector = json.loads(get_file_content(files[i]))['vector']
         next_vector = json.loads(get_file_content(files[i + config.SPLIT_COUNT_FRAMES]))['vector']
         subtract_vector = list(np.array(next_vector) - np.array(current_vector))
@@ -86,8 +110,12 @@ def create_X_train(path, word, random_str):
         }
         x_sample_frame = os.path.join(x_sample_folder, str(number) + "_frame.json")
         frame_file = open(x_sample_frame, "w")
+
         json.dump(result, frame_file)
         frame_file.close()
+        
+    if number < config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
+        fill_to_equal(number, x_sample_folder)
 
 
 def sort_frames(text):
