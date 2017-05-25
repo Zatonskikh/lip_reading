@@ -31,6 +31,8 @@ class LipFinder:
 
             (x, y, w, h) = cv2.boundingRect(np.array([self.lips]))
             self.roi = img[y:y + h, x:x + w]
+            if self.roi is None:
+                raise Exception("Lips_not_found_in image")
             #self.roi = resize(self.roi, width=w*config.ASPECT_RATIO)
 
             self.lips = self.recalculate_lips_cor(self.lips, x, y)

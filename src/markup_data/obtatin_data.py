@@ -7,10 +7,12 @@ from src.utils import draw_lips
 from src.utils import calc_dist, save_matrix_in_file, create_train_element_json, create_X_train
 import shutil
 import src.config as config
+import imutils
 
 class MarkUp:
     def __init__(self):
         self._lip_finder = LipFinder()
+        self.error_count = 0
 
     def mark_up_video(self, path=0, random_str="1"):
         self._path = path
@@ -28,19 +30,28 @@ class MarkUp:
         self.frame_number = 0
         while (self._video.isOpened()):
             ret, frame = self._video.read()
+
             self.frame_number+=1
             if (frame is None):
                 break
 
-            self._lip_finder.find_lips(frame)
+            if self._path.split(".")[-1]=="MOV":
+                frame = imutils.rotate(frame,270)
 
-            img_lips = self._lip_finder.get_lips_image()
+            try:
+                self._lip_finder.find_lips(frame)
+                img_lips = self._lip_finder.get_lips_image()
+            except:
+                print self._path
+                self.error_count += 1
+                return
             h, w = img_lips.shape[:2]
             matrix_dist = self.calc_dist_point_from_other(self._lip_finder.get_lips_cor(), h, w)
             save_matrix_in_file(matrix_dist, self.frame_number, self.folder_name)
 
             draw_lips(self._lip_finder.get_lips_cor(), img_lips)
-            show_image("lips", img_lips)
+            if not config.COLLECT_DATA:
+                show_image("lips", img_lips)
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

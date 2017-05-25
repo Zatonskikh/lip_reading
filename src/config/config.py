@@ -10,7 +10,7 @@ ASPECT_RATIO = 7
 
 VIDEO_FORMATS = ["MOV", "mp4"]
 
-COLLECT_DATA = False
+COLLECT_DATA = True
 
 FRAME_VECTOR_SIZE = 56
 FRAME_DIFFERENCE_AMOUNT_LIMIT = 8
@@ -26,9 +26,9 @@ NN_CLASSES_ID = {
     "zablokiruy": 3,
     "razblokiruy": 4,
     "shifrovanie": 5,
-    "edinitsa": 6,
-    "axioma": 7,
-    "autentificatsia": 8,
+    "edinitca": 6,
+    "aksioma": 7,
+    "autentifikatsia": 8,
     "issledovanie": 9,
     "otsutstvie": 10,
     "samples": 11

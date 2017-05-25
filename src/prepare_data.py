@@ -24,11 +24,12 @@ def sort_frames(text):
 
 
 def get_x_sample(word_folder_path, word, y, y_sample):
-    folders_x = glob.glob(os.path.join(word_folder_path, "samples_*/"))
+    folders_x = glob.glob(os.path.join(word_folder_path, "%s_*/" % word))
     x_sample = []
     for folder in folders_x:
         frames = glob.glob(os.path.join(folder, "*.json"))
         frames = sorted(frames, key=sort_frames)
+        print frames
         for frame in frames:
             x_sample.append(get_vector_from_json(frame))
         y.append(y_sample)
@@ -66,3 +67,5 @@ def start_processing_date():
     save_data(x_train, "X_TRAIN")
     save_data(y_train, "Y_TRAIN")
     print("DATA PROCESSING FINISHED")
+
+start_processing_date()
