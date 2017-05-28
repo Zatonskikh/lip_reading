@@ -29,7 +29,7 @@ def get_x_sample(word_folder_path, word, y, y_sample):
     for folder in folders_x:
         frames = glob.glob(os.path.join(folder, "*.json"))
         frames = sorted(frames, key=sort_frames)
-        print frames
+        print(frames)
         x_sample = []
         for frame in frames:
             x_sample.append(get_vector_from_json(frame))
