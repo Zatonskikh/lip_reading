@@ -35,8 +35,8 @@ class MarkUp:
             if (frame is None):
                 break
 
-            if self._path.split(".")[-1]=="MOV":
-                frame = imutils.rotate(frame,270)
+            # if self._path.split(".")[-1]=="MOV":
+            #     frame = imutils.rotate(frame,270)
 
             try:
                 self._lip_finder.find_lips(frame)

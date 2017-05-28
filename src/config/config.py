@@ -8,7 +8,7 @@ DATA_PATH = os.path.join(CURRENT_PROJECT_PATH, "../data")
 PATH_TO_SHAPE_LANDMARK = "config/shape_predictor_68_face_landmarks.dat"
 ASPECT_RATIO = 7
 
-VIDEO_FORMATS = ["MOV", "mp4", "mpg"]
+VIDEO_FORMATS = ["MOV", "mp4", "mpg","avi"]
 
 COLLECT_DATA = True
 
@@ -26,13 +26,15 @@ NN_CLASSES_ID = {
     "zablokiruy": 3,
     "razblokiruy": 4,
     "shifrovanie": 5,
-    "edinitca": 6,
+    "edenica": 6,
     "aksioma": 7,
     "autentifikatsia": 8,
     "issledovanie": 9,
     "otsutstvie": 10,
-    "samples": 11
+    "trash": 11
 }
+
+WORDS_COUNT = 11
 
 OFFSET_FRAMES = 3
 SPLIT_COUNT_FRAMES = 3

@@ -50,7 +50,7 @@ def create_train_element_json(word, path):
     meta_file_name = os.path.join(path, "%s_meta.json" % word)
     if os.path.exists(meta_file_name):
         return
-    vector = [0] * len(config.NN_CLASSES_ID)
+    vector = [0] * config.WORDS_COUNT
     if word in config.NN_CLASSES_ID:
         vector[config.NN_CLASSES_ID[word] - 1] = 1
     result = {
