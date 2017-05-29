@@ -30,9 +30,21 @@ NN_CLASSES_ID = {
     "aksioma": 7,
     "autentifikatsia": 8,
     "issledovanie": 9,
-    "otsutstvie": 10,
-    "trash": 11
+    "otsutstvie": 10
 }
+
+# NN_CLASSES_ID = {
+#     "start_test": 1,
+#     "stop_test": 2,
+#     "zablokiruy_test": 3,
+#     "razblokiruy_test": 4,
+#     "shifrovanie_test": 5,
+#     "edenica_test": 6,
+#     "aksioma_test": 7,
+#     "autentifikatsia_test": 8,
+#     "issledovanie_test": 9,
+#     "otsutstvie_test": 10
+# }
 
 WORDS_COUNT = 11
 

@@ -29,7 +29,7 @@ def get_x_sample(word_folder_path, word, y, y_sample):
     for folder in folders_x:
         frames = glob.glob(os.path.join(folder, "*.json"))
         frames = sorted(frames, key=sort_frames)
-        print(frames)
+        # print(frames)
         x_sample = []
         for frame in frames:
             x_sample.append(get_vector_from_json(frame))
@@ -70,4 +70,13 @@ def start_processing_date():
     save_data(y_train, "Y_TRAIN")
     print("DATA PROCESSING FINISHED")
 
-# start_processing_date()
+def start_processing_testdata():
+    print("DATA PROCESSING STARTED")
+    x_train, y_train = get_x_y_vectors()
+    save_data(x_train, "X_TEST")
+    print len(x_train) * len(x_train[0]) * len(x_train[0][0]) * len(x_train[0][0][0]) /(56*8)
+    save_data(y_train, "Y_TEST")
+    print len(y_train)
+    print("DATA PROCESSING FINISHED")
+
+#start_processing_testdata()
