@@ -1,2 +1,2 @@
 # lip_reading
-not your busines
+Neural_network_one: best 46.9%
