@@ -67,8 +67,8 @@ Y_test = np.array(Y_test)
 Y_test = Y_test[:, :10]
 
 batch_size = 128  # in each iteration, we consider 128 training examples at once
-num_epochs = 30  # we iterate twenty times over the entire training set
-hidden_size = 56 * 8  # there will be 512 neurons in both hidden layers
+num_epochs = 40  # we iterate twenty times over the entire training set
+hidden_size = 512  # there will be 512 neurons in both hidden layers
 
 num_train = 850 # there are 60000 training examples in MNIST
 num_test = 300 # there are 10000 test examples in MNIST
