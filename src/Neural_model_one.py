@@ -51,14 +51,14 @@ Y_test = json.loads(get_file_content(y_path_test))
 
 
 # need array 850, 448 X
-X_train = create_flat_vector(X_train,850)
+X_train = create_flat_vector(X_train,1650)
 X_test = create_flat_vector(X_test,300)
 # need array 850, 1   Y
 
 X_train = np.array(X_train)
 Y_train = np.array(Y_train)
 
-Y_train = Y_train[:, :10]
+#Y_train = Y_train[:, :10]
 
 
 X_test = np.array(X_test)
@@ -66,11 +66,11 @@ Y_test = np.array(Y_test)
 
 Y_test = Y_test[:, :10]
 
-batch_size = 128  # in each iteration, we consider 128 training examples at once
-num_epochs = 40  # we iterate twenty times over the entire training set
+batch_size = 64  # in each iteration, we consider 128 training examples at once
+num_epochs = 60  # we iterate twenty times over the entire training set
 hidden_size = 512  # there will be 512 neurons in both hidden layers
 
-num_train = 850 # there are 60000 training examples in MNIST
+num_train = 1650 # there are 60000 training examples in MNIST
 num_test = 300 # there are 10000 test examples in MNIST
 #
 num_classes = 10 # there are 10 classes (1 per digit)
