@@ -10,7 +10,7 @@ ASPECT_RATIO = 7
 
 VIDEO_FORMATS = ["MOV", "mp4", "mpg","avi"]
 
-COLLECT_DATA = True
+COLLECT_DATA = False
 
 FRAME_VECTOR_SIZE = 56
 FRAME_DIFFERENCE_AMOUNT_LIMIT = 8
@@ -33,6 +33,11 @@ NN_CLASSES_ID = {
     "otsutstvie": 10
 }
 
+WORDS = ["start", "stop", "zablokiruy", "razblokiruy", "shifrovanie", "edenica", "aksioma", "autentifikatsia", "issledovanie", "otsutstvie"]
+# NN_CLASSES_ID = {
+#     "lol": 1
+# }
+
 # NN_CLASSES_ID = {
 #     "start_test": 1,
 #     "stop_test": 2,
@@ -46,7 +51,7 @@ NN_CLASSES_ID = {
 #     "otsutstvie_test": 10
 # }
 
-WORDS_COUNT = 11
+WORDS_COUNT = 10
 
 OFFSET_FRAMES = 3
 SPLIT_COUNT_FRAMES = 3

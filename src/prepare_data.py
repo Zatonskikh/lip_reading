@@ -57,7 +57,7 @@ def get_x_y_vectors():
 
 
 def save_data(vec, name):
-    path = os.path.join(config.DATA_PATH, name + ".json")
+    path = os.path.join(config.DATA_PATH, name + "validationfsdf" + ".json")
     file = open(path, "w")
     json.dump(vec, file)
     file.close()
@@ -70,7 +70,7 @@ def start_processing_date():
     save_data(y_train, "Y_TRAIN")
     print("DATA PROCESSING FINISHED")
 
-def start_processing_testdata():
+def start_processing_datat():
     print("DATA PROCESSING STARTED")
     x_train, y_train = get_x_y_vectors()
     save_data(x_train, "X_TEST")
@@ -79,4 +79,4 @@ def start_processing_testdata():
     print len(y_train)
     print("DATA PROCESSING FINISHED")
 
-#start_processing_testdata()
+start_processing_date()

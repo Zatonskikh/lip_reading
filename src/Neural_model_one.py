@@ -52,7 +52,7 @@ Y_test = json.loads(get_file_content(y_path_test))
 
 # need array 850, 448 X
 X_train = create_flat_vector(X_train,1650)
-X_test = create_flat_vector(X_test,300)
+X_test = create_flat_vector(X_test,500)
 # need array 850, 1   Y
 
 X_train = np.array(X_train)
@@ -64,14 +64,14 @@ Y_train = np.array(Y_train)
 X_test = np.array(X_test)
 Y_test = np.array(Y_test)
 
-Y_test = Y_test[:, :10]
+#Y_test = Y_test[:, :10]
 
-batch_size = 64  # in each iteration, we consider 128 training examples at once
-num_epochs = 60  # we iterate twenty times over the entire training set
+batch_size = 2  # in each iteration, we consider 128 training examples at once
+num_epochs = 30  # we iterate twenty times over the entire training set
 hidden_size = 512  # there will be 512 neurons in both hidden layers
 
 num_train = 1650 # there are 60000 training examples in MNIST
-num_test = 300 # there are 10000 test examples in MNIST
+num_test = 500 # there are 10000 test examples in MNIST
 #
 num_classes = 10 # there are 10 classes (1 per digit)
 #
@@ -89,14 +89,19 @@ num_classes = 10 # there are 10 classes (1 per digit)
 # X_train = X_train.astype('float32')
 inp = Input(shape=(56*8,), dtype='float32') # Our input is a 1D vector of size 784
 hidden_1 = Dense(hidden_size, activation='relu')(inp) # First hidden ReLU layer
-hidden_2 = Dense(hidden_size, activation='relu')(hidden_1) # Second hidden ReLU layer
-out = Dense(num_classes, activation='softmax')(hidden_2) # Output softmax layer
+hidden_2 = Dense(hidden_size, activation='relu')(hidden_1)
+hidden_3 = Dense(hidden_size, activation='sigmoid')(hidden_2)# Second hidden ReLU layer
+out = Dense(num_classes, activation='softmax')(hidden_3) # Output softmax layer
 #
 model = Model(input=inp, output=out) # To define a model, just specify its input and output layers
 #
 model.compile(loss='categorical_crossentropy', # using the cross-entropy loss function
-optimizer='adam', # using the Adam optimiser
+optimizer='rmsprop', # using the Adam optimiser
 metrics=['accuracy']) # reporting the accuracy
+#
+# model.compile(loss='binary_crossentropy',
+# optimizer='rmsprop',
+# metrics=['accuracy'])
 #
 model.fit(X_train, Y_train, # Train the model using the training set...
 batch_size=batch_size, nb_epoch=num_epochs,

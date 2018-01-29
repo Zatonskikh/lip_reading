@@ -34,9 +34,10 @@ def save_matrix_in_file(mat, frame_number, folder_name):
         for col in range(0, len(mat[0])):
             if row != col:
                 result['vector'].append(mat[row][col])
-    data_file = open(os.path.join(folder_name, file_name), 'w')
-    json.dump(result, data_file)
-    data_file.close()
+    #data_file = open(os.path.join(folder_name, file_name), 'w')
+    #json.dump(result, data_file)
+    #data_file.close()
+    return result
 
 
 def delete_extra_lip_points(lip_array):
@@ -90,32 +91,56 @@ def fill_to_equal(number, x_sample_folder):
         frame_file.close()
         number += 1
 
-
-def create_X_train(path, word, random_str):
-    files = glob.glob(os.path.join(path, "*.json"))
-    files = sorted(files, key=sort_frames)
-    x_sample_folder = os.path.join(path, "../" + word + "_" + random_str)
-    os.mkdir(x_sample_folder)
+def create_X_train(path=None, word=None, random_str=None, mat = None):
+    if mat:
+        lenh = len(mat)
+        results = []
+    else:
+        files = glob.glob(os.path.join(path, "*.json"))
+        files = sorted(files, key=sort_frames)
+        x_sample_folder = os.path.join(path, "../" + word + "_" + random_str)
+        os.mkdir(x_sample_folder)
+        lenh = len(files)
     number = 0
-    for i in range(config.OFFSET_FRAMES, len(files) - config.SPLIT_COUNT_FRAMES, config.SPLIT_COUNT_FRAMES):
+    for i in range(config.OFFSET_FRAMES, lenh - config.SPLIT_COUNT_FRAMES, config.SPLIT_COUNT_FRAMES):
         number += 1
         if number > config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
             break
-        current_vector = json.loads(get_file_content(files[i]))['vector']
-        next_vector = json.loads(get_file_content(files[i + config.SPLIT_COUNT_FRAMES]))['vector']
+        if mat:
+            current_vector = mat[i-1]['vector']
+            next_vector = mat[i - 1 + config.SPLIT_COUNT_FRAMES]['vector']
+        else:
+            current_vector = json.loads(get_file_content(files[i]))['vector']
+            next_vector = json.loads(get_file_content(files[i + config.SPLIT_COUNT_FRAMES]))['vector']
         subtract_vector = list(np.array(next_vector) - np.array(current_vector))
         result = {
             "minuend": i + config.SPLIT_COUNT_FRAMES,
             "subtrahend": i,
             "vector": subtract_vector
         }
-        x_sample_frame = os.path.join(x_sample_folder, str(number) + "_frame.json")
-        frame_file = open(x_sample_frame, "w")
+        if mat:
+            results.append(result)
+        else:
+            x_sample_frame = os.path.join(x_sample_folder, str(number) + "_frame.json")
+            frame_file = open(x_sample_frame, "w")
 
-        json.dump(result, frame_file)
-        frame_file.close()
+            json.dump(result, frame_file)
+            frame_file.close()
     if number < config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
-        fill_to_equal(number, x_sample_folder)
+        if mat:
+
+
+            while number <= config.FRAME_DIFFERENCE_AMOUNT_LIMIT:
+                result = {
+                    "minuend": 0,
+                    "subtrahend": 0,
+                    "vector": get_extra_vector()
+                }
+                results.append(result)
+                number += 1
+        else:
+            fill_to_equal(number, x_sample_folder)
+    return results[:config.FRAME_DIFFERENCE_AMOUNT_LIMIT]
 
 
 def sort_frames(text):

@@ -23,14 +23,15 @@ class MarkUp:
                                             ".".join(os.path.basename(path).split(".")[:-1]) + "_meta")
             if os.path.exists(self.folder_name) and config.DEBUG:
                 shutil.rmtree(self.folder_name)
-            os.mkdir(self.folder_name)
+            #os.mkdir(self.folder_name)
         # TOD0: need in main class?
         word = os.path.basename(os.path.normpath(os.path.join(self.folder_name, "..")))
         create_train_element_json(word, os.path.normpath(os.path.join(self.folder_name, "..")))
         self.frame_number = 0
+        self.mat = []
         while (self._video.isOpened()):
             ret, frame = self._video.read()
-
+            # TODO suda napisat(write code)
             self.frame_number+=1
             if (frame is None):
                 break
@@ -47,17 +48,20 @@ class MarkUp:
                 return
             h, w = img_lips.shape[:2]
             matrix_dist = self.calc_dist_point_from_other(self._lip_finder.get_lips_cor(), h, w)
-            save_matrix_in_file(matrix_dist, self.frame_number, self.folder_name)
+            res = save_matrix_in_file(matrix_dist, self.frame_number, self.folder_name)
+            self.mat.append(res)
 
             draw_lips(self._lip_finder.get_lips_cor(), img_lips)
-            if not config.COLLECT_DATA:
-                show_image("lips", img_lips)
-
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+            # if not config.COLLECT_DATA:
+            #     show_image("lips", img_lips)
+            #
+            # if cv2.waitKey(1) & 0xFF == ord('q'):
+            #     break
         # TODO: delete this line
-        cv2.destroyAllWindows()
-        create_X_train(self.folder_name, word, random_str)
+        # cv2.destroyAllWindows()
+        results =  create_X_train(mat=self.mat)
+        pass
+        return results
 
     #TODO: rewrite after building model of lips
     def calc_dist_point_from_other(self, lips, h, w):

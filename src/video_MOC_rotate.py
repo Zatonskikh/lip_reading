@@ -46,10 +46,10 @@ def rotateVideo(path):
 
 def dir_processing(path_to_dir):
     files = os.listdir(path_to_dir)
-    videos = filter(lambda file: re.search(".mov", file), files)
+    videos = filter(lambda file: re.search(".MOV", file), files)
     video_list = [os.path.join(path_to_dir, video) for video in videos]
     for video in video_list:
         rotateVideo(video)
 
 if __name__ == '__main__':
-    dir_processing("/home/tommyz/PycharmProjects/lip_reading/data")
+    dir_processing("/home/atticus/PycharmProjects/real-time-facial-landmarks/nad")
