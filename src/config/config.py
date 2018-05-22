@@ -3,7 +3,7 @@ import os
 # coding=utf-8
 # PROJECT CONFIG
 CURRENT_PROJECT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-DATA_PATH = os.path.join(CURRENT_PROJECT_PATH, "../data")
+DATA_PATH = os.path.join(CURRENT_PROJECT_PATH, "../")
 # LIP FINDER
 PATH_TO_SHAPE_LANDMARK = "config/shape_predictor_68_face_landmarks.dat"
 ASPECT_RATIO = 7

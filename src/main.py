@@ -1,12 +1,12 @@
 import os
-import config
-from markup_data import MarkUp
+import src.config
+from src.markup_data import MarkUp
 from uuid import uuid4
-from utils.utils import start_collect_data
+from src.utils.utils import start_collect_data
 import numpy as np
 from keras.models import Sequential
 from keras.layers import LSTM, Dense,Dropout,Embedding,Conv1D,MaxPooling1D
-from facerec_from_video_file import face_recognition_custom
+from src.facerec_from_video_file import face_recognition_custom
 
 def create_flat_vector(x_train, length_samples):
     new_x_train = []

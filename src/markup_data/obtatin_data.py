@@ -1,10 +1,10 @@
 import cv2
 import numpy as np
 import os
-from src.utils import show_image
+from src.utils.utils import show_image
 from src.lip_finder import LipFinder
-from src.utils import draw_lips
-from src.utils import calc_dist, save_matrix_in_file, create_train_element_json, create_X_train
+from src.utils.utils import draw_lips
+from src.utils.utils import calc_dist, save_matrix_in_file, create_train_element_json, create_X_train
 import shutil
 import src.config as config
 import imutils
@@ -43,7 +43,7 @@ class MarkUp:
                 self._lip_finder.find_lips(frame)
                 img_lips = self._lip_finder.get_lips_image()
             except:
-                print self._path
+                print(self._path)
                 self.error_count += 1
                 return
             h, w = img_lips.shape[:2]

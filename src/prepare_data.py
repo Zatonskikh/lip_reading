@@ -70,13 +70,15 @@ def start_processing_date():
     save_data(y_train, "Y_TRAIN")
     print("DATA PROCESSING FINISHED")
 
+
 def start_processing_datat():
     print("DATA PROCESSING STARTED")
     x_train, y_train = get_x_y_vectors()
     save_data(x_train, "X_TEST")
-    print len(x_train) * len(x_train[0]) * len(x_train[0][0]) * len(x_train[0][0][0]) /(56*8)
+    print(len(x_train) * len(x_train[0]) * len(x_train[0][0]) * len(x_train[0][0][0]) / (56 * 8))
     save_data(y_train, "Y_TEST")
-    print len(y_train)
+    print(len(y_train))
     print("DATA PROCESSING FINISHED")
+
 
 start_processing_date()
